@@ -11,7 +11,7 @@
 
                     productCards.forEach(card => {
                         const productCategory = card.getAttribute('data-category');
-                        
+                        A
                         if (filterValue === 'todos' || filterValue === productCategory) {
                             card.classList.remove('hidden'); 
                         } else {
