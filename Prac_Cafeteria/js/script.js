@@ -24,10 +24,12 @@
 
 const form = document.querySelector('form');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+if(form){
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    alert('¡Pedido realizado con éxito!');
+        alert('¡Pedido realizado con éxito!');
 
-    form.reset();
-});
+        form.reset();
+    });
+}
