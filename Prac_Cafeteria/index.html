@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Aroma Dulce | Pedidos Online</title>
+    
+    <!-- Vinculación al CSS en su carpeta correspondiente -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Fuente moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<script src="js/script.js"></script>
+<body>
+
+    <!-- CABECERA -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="Imagenes/Logo.jpeg" alt="Logo Cafetería" class="logo-img">
+        </div>
+        
+        <nav class="nav">
+            <a href="#inicio">Inicio</a>
+            <a href="#menu">Menú</a>
+            <a href="#promociones">Promociones</a>
+        </nav>
+    </header>
+
+    <!-- SECCIÓN PRINCIPAL (HERO) -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <span class="badge">Café y a Gusto</span>
+                <h1>¡Tu café ideal te espera!</h1>
+                <p>Disfruta de la mejor selección de granos y postres artesanales.</p>
+                <a href="#formulario" class="btn-primary">Ordenar ahora</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMOS -->
+    <section id="promociones" class="promo-banner">
+        <div class="container">
+            <div class="promo-card">
+                <h3>Promociones del Mes</h3>
+                <p>2x1 en Frappés todas las tardes y Combos de Desayuno desde $75.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENÚ -->
+    <section id="menu" class="menu-section">
+        <h2 class="section-title">Menú de Productos</h2>
+        
+        <!-- BOTONES DE FILTRO CON ATRIBUTOS DE DATOS -->
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="todos">Todos</button>
+            <button class="filter-btn" data-filter="cafes">Cafés</button>
+            <button class="filter-btn" data-filter="frappes">Frappés</button>
+            <button class="filter-btn" data-filter="snacks">Snacks</button>
+            <button class="filter-btn" data-filter="combos">Combos</button>
+        </div>
+        
+        <!-- GRID DE PRODUCTOS CLASIFICADOS -->
+        <div class="product-grid">
+            <div class="product-card" data-category="cafes">
+                <div class="product-img">☕</div>
+                <div class="product-info">
+                    <h4>Capuchino</h4>
+                    <p class="price">$55.00</p>
+                    <button class="btn-add">+</button>
+                </div>
+            </div>
+            
+            <div class="product-card" data-category="frappes">
+                <div class="product-img">🥤</div>
+                <div class="product-info">
+                    <h4>Frappé Cookies</h4>
+                    <p class="price">$65.00</p>
+                    <button class="btn-add">+</button>
+                </div>
+            </div>
+            
+            <div class="product-card" data-category="snacks">
+                <div class="product-img">🥐</div>
+                <div class="product-info">
+                    <h4>Croissants</h4>
+                    <p class="price">$20.00</p>
+                    <button class="btn-add">+</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="combos">
+                <div class="product-img">🥪</div>
+                <div class="product-info">
+                    <h4>Combo Desayuno</h4>
+                    <p class="price">$85.00</p>
+                    <button class="btn-add">+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECOMENDACIONES EN UNA CAJA -->
+    <section class="recommendations">
+        <div class="container">
+            <div class="rec-box">
+                <h4>Recomendaciones Personalizadas</h4>
+                <div class="rec-flex">
+                    <div class="rec-item">🍪 Galleta de Chocolate - $20</div>
+                    <div class="rec-item">🧁 Muffin de Arándanos - $25</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO -->
+    <section id="formulario" class="order-form-section">
+        <div class="form-container">
+            <h3>Formulario de Pedido</h3>
+            <form>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="producto">Producto</label>
+                    <select id="producto">
+                        <option>Café Americano</option>
+                        <option>Frappé Cookies & Cream</option>
+                        <option>Muffins</option>
+                        <option>Combo Desayuno</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tamano">Tamaño</label>
+                        <select id="tamano">
+                            <option>Chico</option>
+                            <option>Mediano</option>
+                            <option>Grande</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="metodo_pago">Pago</label>
+                        <select id="metodo_pago">
+                            <option>Tarjeta / Efectivo</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-purchase">COMPRAR AHORA</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CHATBOT -->
+    <div class="chatbot-bubble">
+        <span>🤖</span>
+        <div class="chat-hint">Hola, ¿en qué puedo ayudarte?</div>
+    </div>
+</body>
+</html>
