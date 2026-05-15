@@ -1,9 +1,9 @@
 /* --- VARIABLES Y CONFIGURACIÓN --- */
 :root {
     --primary-color: #6F4E37; /* Tono café principal */
-    --accent-color: #C19A6B;  /* Tono café claro */
-    --bg-color: #FDFBF7;      /* Fondo crema suave */
-    --text-dark: #2D241E;     /* Texto oscuro para legibilidad */
+    --accent-color: #C19A6B;  /* Tono café claro para detalles */
+    --bg-color: #FDFBF7;      /* Crema suave para el fondo */
+    --text-dark: #2D241E;     /* Color de texto para lectura fácil */
     --white: #ffffff;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
@@ -18,68 +18,76 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-dark);
-    line-height: 1.6;
+    line-height: 1.8;
     scroll-behavior: smooth;
 }
 
-/* --- CABECERA Y LOGO --- */
+/* --- CLASES GLOBALES --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- CABECERA --- */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 8%;
+    padding: 20px 8%;
     background: var(--white);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.logo-container {
-    width: 95px;  /* Aquí hacemos el logo más grande (antes era de ~60px) */
-    height: 95px;
-    border-radius: 50%; /* Hacemos el contenedor perfectamente redondo */
-    overflow: hidden; /* Esto recorta como tijera todo lo que salga del círculo */
+/* ESTILOS ACTUALIZADOS: Logo con imagen circular */
+.logo {
     display: flex;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra elegante */
+    text-decoration: none;
 }
 
-.logo-img {
-    width: 115%; /* Al ponerle más del 100%, le hacemos "zoom" a la imagen */
-    height: 115%; /* Esto empuja los bordes negros fuera del círculo visible */
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    transition: transform 0.3s ease;
+.logo img {
+    width: 60px; /* Tamaño del logo */
+    height: 60px; /* Misma medida para que sea un círculo perfecto */
+    border-radius: 50%; /* Hace la imagen circular */
+    object-fit: cover; /* Evita que el logo se deforme */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* El efecto hover ahora se lo aplicamos a la imagen cuando pasas el mouse por el contenedor */
-.logo-container:hover .logo-img {
-    transform: scale(1.08); 
-}
 .nav a {
-    margin: 0 15px;
+    margin: 0 20px;
     text-decoration: none;
     color: var(--text-dark);
-    font-size: 0.9rem;
-    font-weight: 400;
-    transition: color 0.3s;
+    font-size: 0.95rem;
+    transition: 0.3s;
 }
 
 .nav a:hover {
     color: var(--primary-color);
 }
 
-/* --- SECCIÓN HERO --- */
+.header-icons .icon {
+    font-size: 1.3rem;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.header-icons .icon:hover {
+    transform: scale(1.1);
+}
+
+/* --- SECCIÓN PRINCIPAL (HERO) --- */
 .hero {
-    height: 65vh;
-    background: #dcdcdc; /* Color gris base si no hay imagen */
+    height: 70vh;
+    /* Nota: Si usas una imagen de tu carpeta 'Imagenes', la ruta sería: 
+       background: url('../Imagenes/hero.jpg') center/cover no-repeat; */
+    background: #e5e5e5; 
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
 }
 
 .hero-overlay {
@@ -93,95 +101,102 @@ body {
 
 .hero-content {
     color: var(--white);
-    padding: 0 20px;
+    text-align: center;
+    max-width: 600px;
 }
 
+/* ESTILO AGREGADO: Etiqueta (Badge) del Hero */
 .badge {
-    background: var(--accent-color); 
-    padding: 5px 15px; 
-    border-radius: 20px; 
-    font-size: 0.8rem; 
-    font-weight: bold;
+    background: var(--accent-color);
+    color: var(--white);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .hero h1 {
-    font-size: 2.8rem;
-    margin-bottom: 15px;
+    font-size: 3rem;
+    margin: 15px 0;
 }
 
 .btn-primary {
     display: inline-block;
     background: var(--primary-color);
     color: var(--white);
-    padding: 12px 30px;
-    border-radius: 5px;
     text-decoration: none;
+    padding: 14px 35px;
+    border-radius: 8px;
     font-weight: 600;
     margin-top: 20px;
-    transition: background 0.3s;
+    transition: 0.3s background;
 }
 
 .btn-primary:hover {
     background: var(--accent-color);
 }
 
-/* --- SECCIONES GENERALES --- */
-.promo-banner, .menu-section, .order-form-section, .recommendations {
-    padding: 70px 8%;
+/* --- ESPACIADO Y SEPARACIÓN --- */
+.promo-banner, .menu-section, .order-form-section {
+    padding: 80px 8%; 
 }
 
 .promo-card {
     background: var(--accent-color);
     color: var(--white);
-    padding: 25px;
-    border-radius: 12px;
+    padding: 30px;
+    border-radius: 15px;
     text-align: center;
+    box-shadow: var(--shadow);
+    /* AGREGADO: Transición suave para el zoom */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* --- MENÚ Y FILTROS --- */
+/* AGREGADO: Efecto hover (zoom y aumento de sombra) para las promociones */
+.promo-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* --- MENÚ DE PRODUCTOS --- */
 .section-title {
     text-align: center;
-    margin-bottom: 40px;
-    font-size: 1.8rem;
+    margin-bottom: 50px;
+    font-size: 2rem;
 }
 
 .filter-tabs {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap; /* Permite que los botones bajen de línea en móviles */
     gap: 15px;
     margin-bottom: 40px;
-    flex-wrap: wrap;
 }
 
-.filter-btn {
-    background: #E8DCC4; /* Color crema apagado por defecto */
-    color: var(--text-dark);
-    border: none;
-    padding: 10px 25px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-family: inherit;
+.filter-tabs button {
+    padding: 8px 20px;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    border-radius: 20px;
     cursor: pointer;
+    color: var(--primary-color);
+    font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.filter-btn:hover {
-    background: var(--accent-color);
-    color: var(--white);
-    transform: translateY(-2px);
-}
-
-.filter-btn.active {
+.filter-tabs button.active, .filter-tabs button:hover {
     background: var(--primary-color);
     color: var(--white);
-    box-shadow: 0 4px 10px rgba(111, 78, 55, 0.4);
 }
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 35px;
 }
 
 .product-card {
@@ -190,119 +205,140 @@ body {
     overflow: hidden;
     box-shadow: var(--shadow);
     text-align: center;
-    transition: 0.3s;
+    padding-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* ESTILOS ACTUALIZADOS: Contenedor e imágenes de los productos */
 .product-img {
-    height: 160px;
-    background: #f4f4f4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
+    height: 180px;
+    width: 100%;
+    background: #f9f4f0;
+    overflow: hidden; /* Mantiene la imagen dentro de los bordes curvos de la tarjeta */
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta la imagen automáticamente para llenar el cuadro sin deformarla */
+    transition: transform 0.4s ease; /* Transición suave para el zoom */
+}
+
+/* Efecto de zoom elegante al pasar el ratón */
+.product-card:hover .product-img img {
+    transform: scale(1.08);
 }
 
 .product-info {
     padding: 20px;
 }
 
-.price {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin: 10px 0;
+.product-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
 }
 
+.price {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* ESTILO AGREGADO: Botón "+" en las tarjetas de producto */
 .btn-add {
     background: var(--primary-color);
     color: var(--white);
     border: none;
-    border-radius: 50%;
     width: 35px;
     height: 35px;
+    border-radius: 50%;
     font-size: 1.2rem;
     cursor: pointer;
     transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-add:hover {
     background: var(--accent-color);
+    transform: scale(1.1);
 }
 
-/* Utilidad para ocultar productos con el filtro JS */
-.hidden {
-    display: none !important;
-}
-
-/* --- RECOMENDACIONES EN CAJA --- */
-.rec-box {
-    background: var(--white);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    text-align: center;
-    border: 2px dashed var(--accent-color);
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.rec-box h4 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: var(--primary-color);
+/* --- RECOMENDACIONES --- */
+.recommendations {
+    background: #f9f4f0;
+    padding: 50px 8%;
+    margin: 40px 0;
 }
 
 .rec-flex {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Asegura que no se desborde en móviles */
+    gap: 15px;
+    margin-top: 15px;
 }
 
 .rec-item {
-    background: var(--bg-color);
-    padding: 15px 25px;
+    background: var(--white);
+    padding: 10px 20px;
     border-radius: 10px;
+    font-size: 0.95rem;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border-left: 4px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* --- FORMULARIO DE PEDIDO --- */
+/* --- FORMULARIO --- */
 .form-container {
-    max-width: 550px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 35px;
+    padding: 40px;
     background: var(--white);
-    border-radius: 15px;
+    border-radius: 20px;
     box-shadow: var(--shadow);
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
     font-weight: 600;
-    font-size: 0.85rem;
 }
 
 .form-group input, .form-group select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 6px;
-    font-family: inherit;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: var(--primary-color);
 }
 
 .form-row {
     display: flex;
-    gap: 15px;
+    gap: 20px;
+}
+
+/* ESTILO AGREGADO: Para que las cajas de tamaño y pago se dividan al 50% */
+.form-row .form-group {
+    flex: 1;
 }
 
 .btn-purchase {
@@ -310,45 +346,70 @@ body {
     background: var(--primary-color);
     color: var(--white);
     border: none;
-    padding: 14px;
+    padding: 15px;
+    font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: 0.3s;
+    margin-top: 15px;
+    transition: 0.3s background;
 }
 
 .btn-purchase:hover {
-    background: var(--text-dark);
+    background: var(--accent-color);
 }
 
 /* --- CHATBOT IA --- */
 .chatbot-bubble {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
+    bottom: 30px;
+    right: 30px;
     background: var(--primary-color);
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--white);
-    font-size: 1.4rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     cursor: pointer;
-    z-index: 1000;
+    transition: transform 0.3s ease;
+    z-index: 9999;
+}
+
+.chatbot-bubble:hover {
+    transform: scale(1.1);
 }
 
 .chat-hint {
     position: absolute;
-    right: 70px;
+    right: 75px;
     background: var(--white);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.75rem;
     color: var(--text-dark);
-    box-shadow: var(--shadow);
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-size: 0.85rem;
     white-space: nowrap;
+    box-shadow: var(--shadow);
+    font-weight: 600;
+}
+
+/* --- RESPONSIVE DESIGN (MÓVILES) --- */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    .header {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .nav {
+        margin: 15px 0;
+    }
 }

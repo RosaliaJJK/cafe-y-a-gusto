@@ -22,12 +22,10 @@
 
 <body>
 
-    <!-- CABECERA -->
     <header class="header">
-        <div class="logo-container">
-            <img src="Imagenes/Logo.jpeg" alt="Logo Cafetería" class="logo-img">
-        </div>
-        
+        <a href="#inicio" class="logo">
+            <img src="Imagenes/Logo.jpeg" alt="Logo Café ">
+        </a>
         <nav class="nav">
             <a href="#inicio">Inicio</a>
             <a href="#menu">Menú</a>
@@ -35,7 +33,6 @@
         </nav>
     </header>
 
-    <!-- SECCIÓN PRINCIPAL (HERO) -->
     <section id="inicio" class="hero">
         <div class="hero-overlay">
             <div class="hero-content">
@@ -47,128 +44,241 @@
         </div>
     </section>
 
-    <!-- PROMOS -->
     <section id="promociones" class="promo-banner">
         <div class="container">
-            <div class="promo-card">
-                <h3>Promociones del Mes</h3>
-                <p>2x1 en Frappés todas las tardes y Combos de Desayuno desde $75.</p>
+            <h2 class="section-title">Promociones del Mes</h2>
+            <div class="product-grid">
+                <div class="promo-card">
+                    <p>2x1 en Frappés todas las tardes y Combos de Desayuno desde $75.</p>
+                </div>
+                <div class="promo-card">
+                    <p>Viernes de Frappé: todos a $59</p>
+                </div>
+                <div class="promo-card">
+                    <p>Frappé grande al precio de chico</p>
+                </div>
+                <div class="promo-card">
+                    <p>2 cafés americanos por $70</p>
+                </div>
+                <div class="promo-card">
+                    <p>Café + pan dulce por $65</p>
+                </div>
+                <div class="promo-card">
+                    <p>Refill de americano por $20</p>
+                </div>
+                <div class="promo-card">
+                    <p>Lunes de Latte: todos al 20%</p>
+                </div>
+                <div class="promo-card">
+                    <p>Combo desayuno desde $75 antes de las 12 PM</p>
+                </div>
+                <div class="promo-card">
+                    <p>Combo pareja con descuento los domingos</p>
+                </div>
+                <div class="promo-card">
+                    <p>Compra un combo y agrega un postre por $20</p>
+                </div>
+                <div class="promo-card">
+                    <p>Martes estudiantil: 15% con credencial</p>
+                </div>
+                <div class="promo-card">
+                    <p>Tarjeta de cliente frecuente: “Compra 5 cafés y el 6° gratis”</p>
+                </div>
+                <div class="promo-card">
+                    <p>Happy Hour de 5 PM a 7 PM</p>
+                </div>
+                <div class="promo-card">
+                    <p>Miércoles de snacks al 2x1</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- MENÚ -->
     <section id="menu" class="menu-section">
         <h2 class="section-title">Menú de Productos</h2>
         
-        <!-- BOTONES DE FILTRO CON ATRIBUTOS DE DATOS -->
         <div class="filter-tabs">
-            <button class="filter-btn active" data-filter="todos">Todos</button>
-            <button class="filter-btn" data-filter="cafes">Cafés</button>
-            <button class="filter-btn" data-filter="frappes">Frappés</button>
-            <button class="filter-btn" data-filter="snacks">Snacks</button>
-            <button class="filter-btn" data-filter="combos">Combos</button>
+            <button class="active">Cafés</button>
+            <button>Frappés</button>
+            <button>Snacks</button>
+            <button>Combos</button>
         </div>
-        
-        <!-- GRID DE PRODUCTOS CLASIFICADOS -->
-        <div class="product-grid">
-            <div class="product-card" data-category="cafes">
-                <div class="product-img">☕</div>
-                <div class="product-info">
-                    <h4>Capuchino</h4>
-                    <p class="price">$55.00</p>
-                    <button class="btn-add">+</button>
-                </div>
-            </div>
-            
-            <div class="product-card" data-category="frappes">
-                <div class="product-img">🥤</div>
-                <div class="product-info">
-                    <h4>Frappé Cookies</h4>
-                    <p class="price">$65.00</p>
-                    <button class="btn-add">+</button>
-                </div>
-            </div>
-            
-            <div class="product-card" data-category="snacks">
-                <div class="product-img">🥐</div>
-                <div class="product-info">
-                    <h4>Croissants</h4>
-                    <p class="price">$20.00</p>
-                    <button class="btn-add">+</button>
-                </div>
-            </div>
 
-            <div class="product-card" data-category="combos">
-                <div class="product-img">🥪</div>
-                <div class="product-info">
-                    <h4>Combo Desayuno</h4>
-                    <p class="price">$85.00</p>
-                    <button class="btn-add">+</button>
-                </div>
-            </div>
+        <div class="product-grid">
+            
+            <div class="product-card"><div class="product-img"><img src="Imagenes/capuchino.jpg" alt="Capuchino"></div><div class="product-info"><h4>Capuchino</h4><p class="price">$55.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/latte-vainilla.jpg" alt="Latte Vainilla"></div><div class="product-info"><h4>Latte Vainilla</h4><p class="price">$60.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/latte-caramelo.jpg" alt="Latte Caramelo"></div><div class="product-info"><h4>Latte Caramelo</h4><p class="price">$65.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/moka.jpg" alt="Moka"></div><div class="product-info"><h4>Moka</h4><p class="price">$68.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/americano.jpg" alt="Americano"></div><div class="product-info"><h4>Americano</h4><p class="price">$45.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/espresso-doble.jpg" alt="Espresso Doble"></div><div class="product-info"><h4>Espresso Doble</h4><p class="price">$40.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/cafe-helado.jpg" alt="Café Helado"></div><div class="product-info"><h4>Café Helado</h4><p class="price">$60.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/latte-frio.jpg" alt="Latte Frío"></div><div class="product-info"><h4>Latte Frío</h4><p class="price">$70.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/dirty-chai.jpg" alt="Dirty Chai"></div><div class="product-info"><h4>Dirty Chai</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/matcha-latte.jpg" alt="Matcha Latte"></div><div class="product-info"><h4>Matcha Latte</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/chocolate-caliente.jpg" alt="Chocolate Caliente"></div><div class="product-info"><h4>Chocolate Caliente</h4><p class="price">$55.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/cafe-avellana.jpg" alt="Café Avellana"></div><div class="product-info"><h4>Café Avellana</h4><p class="price">$68.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/cafe-oreo.jpg" alt="Café Oreo"></div><div class="product-info"><h4>Café Oreo</h4><p class="price">$72.00</p><button class="btn-add">+</button></div></div>
+
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-cookies.jpg" alt="Frappé Cookies"></div><div class="product-info"><h4>Frappé Cookies</h4><p class="price">$65.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-oreo.jpg" alt="Frappé Oreo"></div><div class="product-info"><h4>Frappé Oreo</h4><p class="price">$70.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-moka.jpg" alt="Frappé Moka"></div><div class="product-info"><h4>Frappé Moka</h4><p class="price">$72.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-caramelo.jpg" alt="Frappé Caramelo"></div><div class="product-info"><h4>Frappé Caramelo</h4><p class="price">$72.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-cajeta.jpg" alt="Frappé Cajeta"></div><div class="product-info"><h4>Frappé Cajeta</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-mazapan.jpg" alt="Frappé Mazapán"></div><div class="product-info"><h4>Frappé Mazapán</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-nutella.jpg" alt="Frappé Nutella"></div><div class="product-info"><h4>Frappé Nutella</h4><p class="price">$80.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-ferrero.jpg" alt="Frappé Ferrero"></div><div class="product-info"><h4>Frappé Ferrero</h4><p class="price">$85.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-fresa.jpg" alt="Frappé Fresa Cheesecake"></div><div class="product-info"><h4>Frappé Fresa Cheesecake</h4><p class="price">$78.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-blanco.jpg" alt="Frappé Chocolate Blanco"></div><div class="product-info"><h4>Frappé Chocolate Blanco</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-chai.jpg" alt="Frappé Chai"></div><div class="product-info"><h4>Frappé Chai</h4><p class="price">$72.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-matcha.jpg" alt="Frappé Matcha"></div><div class="product-info"><h4>Frappé Matcha</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/frappe-kinder.jpg" alt="Frappé Kinder"></div><div class="product-info"><h4>Frappé Kinder</h4><p class="price">$85.00</p><button class="btn-add">+</button></div></div>
+
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-clasico.jpg" alt="Croissant Clásico"></div><div class="product-info"><h4>Croissant Clásico</h4><p class="price">$20.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-chocolate.jpg" alt="Croissant de Chocolate"></div><div class="product-info"><h4>Croissant de Chocolate</h4><p class="price">$35.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-cajeta.jpg" alt="Croissant de Cajeta"></div><div class="product-info"><h4>Croissant de Cajeta</h4><p class="price">$38.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-nutella.jpg" alt="Croissant de Nutella"></div><div class="product-info"><h4>Croissant de Nutella</h4><p class="price">$42.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-jamon-queso.jpg" alt="Croissant Jamón y Queso"></div><div class="product-info"><h4>Croissant Jamón y Queso</h4><p class="price">$55.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-pepperoni.jpg" alt="Croissant Pepperoni"></div><div class="product-info"><h4>Croissant Pepperoni</h4><p class="price">$60.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-pollo.jpg" alt="Croissant Pollo Chipotle"></div><div class="product-info"><h4>Croissant Pollo Chipotle</h4><p class="price">$65.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-serrano.jpg" alt="Croissant Jamón Serrano"></div><div class="product-info"><h4>Croissant Jamón Serrano</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/croissant-hawaiano.jpg" alt="Croissant Hawaiano"></div><div class="product-info"><h4>Croissant Hawaiano</h4><p class="price">$65.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/brownie.jpg" alt="Brownie"></div><div class="product-info"><h4>Brownie</h4><p class="price">$35.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/galletas-oreo.jpg" alt="Galletas Oreo"></div><div class="product-info"><h4>Galletas Oreo</h4><p class="price">$25.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/cheesecake.jpg" alt="Cheesecake"></div><div class="product-info"><h4>Cheesecake</h4><p class="price">$55.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/muffin-chocolate.jpg" alt="Muffin de Chocolate"></div><div class="product-info"><h4>Muffin de Chocolate</h4><p class="price">$38.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/papas-gajo.jpg" alt="Papas Gajo"></div><div class="product-info"><h4>Papas Gajo</h4><p class="price">$45.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/panini-italiano.jpg" alt="Panini Italiano"></div><div class="product-info"><h4>Panini Italiano</h4><p class="price">$85.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/sandwich-club.jpg" alt="Sándwich Club"></div><div class="product-info"><h4>Sándwich Club</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/molletes.jpg" alt="Molletes"></div><div class="product-info"><h4>Molletes</h4><p class="price">$65.00</p><button class="btn-add">+</button></div></div>
+
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-clasico.jpg" alt="Combo Desayuno Clásico"></div><div class="product-info"><h4>Combo Desayuno Clásico</h4><p class="price">$75.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-sandwich.jpg" alt="Combo Sandwich"></div><div class="product-info"><h4>Combo Sandwich</h4><p class="price">$115.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-panini.jpg" alt="Combo Panini"></div><div class="product-info"><h4>Combo Panini</h4><p class="price">$135.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-pareja.jpg" alt="Combo Pareja"></div><div class="product-info"><h4>Combo Pareja</h4><p class="price">$149.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-estudiante.jpg" alt="Combo Estudiante"></div><div class="product-info"><h4>Combo Estudiante</h4><p class="price">$95.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-dulce.jpg" alt="Combo Dulce"></div><div class="product-info"><h4>Combo Dulce</h4><p class="price">$99.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-ejecutivo.jpg" alt="Combo Ejecutivo"></div><div class="product-info"><h4>Combo Ejecutivo</h4><p class="price">$140.00</p><button class="btn-add">+</button></div></div>
+            <div class="product-card"><div class="product-img"><img src="Imagenes/combo-morning.jpg" alt="Combo Morning"></div><div class="product-info"><h4>Combo Morning</h4><p class="price">$110.00</p><button class="btn-add">+</button></div></div>
+
         </div>
     </section>
 
-    <!-- RECOMENDACIONES EN UNA CAJA -->
     <section class="recommendations">
         <div class="container">
-            <div class="rec-box">
-                <h4>Recomendaciones Personalizadas</h4>
-                <div class="rec-flex">
-                    <div class="rec-item">🍪 Galleta de Chocolate - $20</div>
-                    <div class="rec-item">🧁 Muffin de Arándanos - $25</div>
-                </div>
+            <h4>Recomendaciones Personalizadas</h4>
+            <p>¡Acompaña tu bebida con estos favoritos!</p>
+            <div class="rec-flex">
+                <div class="rec-item">🍪 Galleta de Chocolate - $20</div>
+                <div class="rec-item">🧁 Muffin de Arándanos - $25</div>
             </div>
         </div>
     </section>
 
-    <!-- FORMULARIO -->
     <section id="formulario" class="order-form-section">
         <div class="form-container">
             <h3>Formulario de Pedido</h3>
-            <form>
+            <form action="/guardar-pedido" method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
                 </div>
+                
                 <div class="form-group">
                     <label for="producto">Producto</label>
-                    <select id="producto">
-                        <option>Café Americano</option>
-                        <option>Frappé Cookies & Cream</option>
-                        <option>Muffins</option>
-                        <option>Combo Desayuno</option>
+                    <select id="producto" name="producto">
+                        <optgroup label="Cafés">
+                            <option value="Capuchino">Capuchino</option>
+                            <option value="Latte Vainilla">Latte Vainilla</option>
+                            <option value="Latte Caramelo">Latte Caramelo</option>
+                            <option value="Moka">Moka</option>
+                            <option value="Americano">Americano</option>
+                            <option value="Espresso Doble">Espresso Doble</option>
+                            <option value="Café Helado">Café Helado</option>
+                            <option value="Latte Frío">Latte Frío</option>
+                            <option value="Dirty Chai">Dirty Chai</option>
+                            <option value="Matcha Latte">Matcha Latte</option>
+                            <option value="Chocolate Caliente">Chocolate Caliente</option>
+                            <option value="Café Avellana">Café Avellana</option>
+                            <option value="Café Oreo">Café Oreo</option>
+                        </optgroup>
+                        
+                        <optgroup label="Frappés">
+                            <option value="Frappé Cookies">Frappé Cookies</option>
+                            <option value="Frappé Oreo">Frappé Oreo</option>
+                            <option value="Frappé Moka">Frappé Moka</option>
+                            <option value="Frappé Caramelo">Frappé Caramelo</option>
+                            <option value="Frappé Cajeta">Frappé Cajeta</option>
+                            <option value="Frappé Mazapán">Frappé Mazapán</option>
+                            <option value="Frappé Nutella">Frappé Nutella</option>
+                            <option value="Frappé Ferrero">Frappé Ferrero</option>
+                            <option value="Frappé Fresa Cheesecake">Frappé Fresa Cheesecake</option>
+                            <option value="Frappé Chocolate Blanco">Frappé Chocolate Blanco</option>
+                            <option value="Frappé Chai">Frappé Chai</option>
+                            <option value="Frappé Matcha">Frappé Matcha</option>
+                            <option value="Frappé Kinder">Frappé Kinder</option>
+                        </optgroup>
+                        
+                        <optgroup label="Snacks & Croissants">
+                            <option value="Croissant Clásico">Croissant Clásico</option>
+                            <option value="Croissant de Chocolate">Croissant de Chocolate</option>
+                            <option value="Croissant de Cajeta">Croissant de Cajeta</option>
+                            <option value="Croissant de Nutella">Croissant de Nutella</option>
+                            <option value="Croissant Jamón y Queso">Croissant Jamón y Queso</option>
+                            <option value="Croissant Pepperoni">Croissant Pepperoni</option>
+                            <option value="Croissant Pollo Chipotle">Croissant Pollo Chipotle</option>
+                            <option value="Croissant Jamón Serrano">Croissant Jamón Serrano</option>
+                            <option value="Croissant Hawaiano">Croissant Hawaiano</option>
+                            <option value="Brownie">Brownie</option>
+                            <option value="Galletas Oreo">Galletas Oreo</option>
+                            <option value="Cheesecake">Cheesecake</option>
+                            <option value="Muffin de Chocolate">Muffin de Chocolate</option>
+                            <option value="Papas Gajo">Papas Gajo</option>
+                            <option value="Panini Italiano">Panini Italiano</option>
+                            <option value="Sándwich Club">Sándwich Club</option>
+                            <option value="Molletes">Molletes</option>
+                        </optgroup>
+                        
+                        <optgroup label="Combos">
+                            <option value="Combo Desayuno Clásico">Combo Desayuno Clásico</option>
+                            <option value="Combo Sandwich">Combo Sandwich</option>
+                            <option value="Combo Panini">Combo Panini</option>
+                            <option value="Combo Pareja">Combo Pareja</option>
+                            <option value="Combo Estudiante">Combo Estudiante</option>
+                            <option value="Combo Dulce">Combo Dulce</option>
+                            <option value="Combo Ejecutivo">Combo Ejecutivo</option>
+                            <option value="Combo Morning">Combo Morning</option>
+                        </optgroup>
                     </select>
                 </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="tamano">Tamaño</label>
-                        <select id="tamano">
+                        <select id="tamano" name="tamano">
                             <option>Chico</option>
                             <option>Mediano</option>
                             <option>Grande</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="metodo_pago">Pago</label>
-                        <select id="metodo_pago">
-                            <option>Tarjeta / Efectivo</option>
+                        <label for="metodo_pago">Método de Pago</label>
+                        <select id="metodo_pago" name="metodo_pago">
+                            <option>Efectivo</option>
+                            <option>Tarjeta</option>
                         </select>
                     </div>
                 </div>
+
                 <button type="submit" class="btn-purchase">COMPRAR AHORA</button>
             </form>
         </div>
     </section>
 
-    <!-- CHATBOT -->
     <div class="chatbot-bubble">
-        <span>🤖</span>
+        <span>💬</span>
         <div class="chat-hint">Hola, ¿en qué puedo ayudarte?</div>
     </div>
-
-<script src="JS/script.js"></script>
 
 </body>
 </html>
