@@ -39,12 +39,9 @@ app.get('/', (req, res) => {
 
 app.post('/guardar-pedido', (req, res) => {
 
-    const {
-        nombre,
-        producto,
-        tamano,
-        metodo_pago
-    } = req.body;
+    const { nombre, producto, tamano, metodo_pago } = req.body;
+
+    console.log(req.body);
 
     const buscarProducto = `
         SELECT id_producto, precio
@@ -54,9 +51,17 @@ app.post('/guardar-pedido', (req, res) => {
 
     db.query(buscarProducto, [producto], (err, productoResult) => {
 
-        if(err){
+        if (err) {
             console.log(err);
-            return res.send('Error producto');
+            return res.status(500).json({
+                mensaje: 'Error producto'
+            });
+        }
+
+        if (productoResult.length === 0) {
+            return res.status(404).json({
+                mensaje: 'Producto no encontrado'
+            });
         }
 
         const id_producto = productoResult[0].id_producto;
@@ -70,9 +75,17 @@ app.post('/guardar-pedido', (req, res) => {
 
         db.query(buscarTamano, [tamano], (err, tamanoResult) => {
 
-            if(err){
+            if (err) {
                 console.log(err);
-                return res.send('Error tamaño');
+                return res.status(500).json({
+                    mensaje: 'Error tamaño'
+                });
+            }
+
+            if (tamanoResult.length === 0) {
+                return res.status(404).json({
+                    mensaje: 'Tamaño no encontrado'
+                });
             }
 
             const id_tamano = tamanoResult[0].id_tamano;
@@ -85,9 +98,17 @@ app.post('/guardar-pedido', (req, res) => {
 
             db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
 
-                if(err){
+                if (err) {
                     console.log(err);
-                    return res.send('Error pago');
+                    return res.status(500).json({
+                        mensaje: 'Error pago'
+                    });
+                }
+
+                if (pagoResult.length === 0) {
+                    return res.status(404).json({
+                        mensaje: 'Método de pago no encontrado'
+                    });
                 }
 
                 const id_metodo_pago = pagoResult[0].id_metodo_pago;
@@ -103,9 +124,11 @@ app.post('/guardar-pedido', (req, res) => {
                     [nombre, id_metodo_pago, precio],
                     (err, pedidoResult) => {
 
-                        if(err){
+                        if (err) {
                             console.log(err);
-                            return res.send('Error pedido');
+                            return res.status(500).json({
+                                mensaje: 'Error pedido'
+                            });
                         }
 
                         const id_pedido = pedidoResult.insertId;
@@ -121,15 +144,17 @@ app.post('/guardar-pedido', (req, res) => {
                             [id_pedido, id_producto, id_tamano, 1, precio],
                             (err) => {
 
-                                if(err){
+                                if (err) {
                                     console.log(err);
-                                    return res.send('Error detalle');
+                                    return res.status(500).json({
+                                        mensaje: 'Error detalle'
+                                    });
                                 }
 
-                        res.json({
-                                mensaje: 'Pedido realizado correctamente',
-                                nombre: nombre
-                            });
+                                return res.json({
+                                    mensaje: 'Pedido realizado correctamente',
+                                    nombre: nombre
+                                });
 
                             }
                         );
