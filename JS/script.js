@@ -30,8 +30,8 @@ formulario.addEventListener("submit", async (e) => {
     } catch(error) {
 
         alert("Error al enviar pedido");
-        console.log(error);
-
+        console.log(await respuesta.text());
+        
     }
 
 });
