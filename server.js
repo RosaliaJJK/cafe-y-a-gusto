@@ -54,9 +54,10 @@ app.post('/guardar-pedido', (req, res) => {
 
     db.query(buscarProducto, [producto], (err, productoResult) => {
 
-        if(err){
-            console.log(err);
-            return res.send('Error producto');
+        if(productoResult.length === 0){
+            return res.status(404).json({
+                mensaje: "Producto no encontrado"
+            });
         }
 
         const id_producto = productoResult[0].id_producto;
@@ -70,10 +71,12 @@ app.post('/guardar-pedido', (req, res) => {
 
         db.query(buscarTamano, [tamano], (err, tamanoResult) => {
 
-            if(err){
-                console.log(err);
-                return res.send('Error tamaño');
+            if(tamanoResult.length === 0){
+                return res.status(404).json({
+                    mensaje: "Tamaño no encontrado"
+                });
             }
+
 
             const id_tamano = tamanoResult[0].id_tamano;
 
@@ -85,13 +88,14 @@ app.post('/guardar-pedido', (req, res) => {
 
             db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
 
-                if(err){
-                    console.log(err);
-                    return res.send('Error pago');
+                if(pagoResult.length === 0){
+                    return res.status(404).json({
+                        mensaje: "Método de pago no encontrado"
+                    });
                 }
 
                 const id_metodo_pago = pagoResult[0].id_metodo_pago;
-
+                
                 const insertarPedido = `
                     INSERT INTO Pedidos
                     (nombre_cliente, id_metodo_pago, total)
@@ -126,13 +130,10 @@ app.post('/guardar-pedido', (req, res) => {
                                     return res.send('Error detalle');
                                 }
 
-                                res.send(`
-                                    <div style="text-align:center;padding:50px;font-family:sans-serif;">
-                                        <h1>Pedido realizado correctamente</h1>
-                                        <p>Gracias ${nombre}</p>
-                                        <a href="/">Volver</a>
-                                    </div>
-                                `);
+                        res.json({
+                                mensaje: "Pedido realizado correctamente",
+                                nombre: nombre
+                            });
 
                             }
                         );
