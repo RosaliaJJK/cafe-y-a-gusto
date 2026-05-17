@@ -109,8 +109,9 @@ app.post('/guardar-pedido', (req, res) => {
 
                         if(err){
                             console.log(err);
-                            return res.send('Error pedido');
-                        }
+                            return res.status(500).json({
+                            mensaje: 'Error producto'
+                        });                        }
 
                         const id_pedido = pedidoResult.insertId;
 
@@ -127,8 +128,10 @@ app.post('/guardar-pedido', (req, res) => {
 
                                 if(err){
                                     console.log(err);
-                                    return res.send('Error detalle');
-                                }
+                                    return res.status(500).json({
+                                        mensaje: 'Error detalle'
+                                    })
+                                    };
 
                         res.json({
                                 mensaje: "Pedido realizado correctamente",

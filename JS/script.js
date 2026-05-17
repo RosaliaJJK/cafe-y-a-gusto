@@ -18,26 +18,21 @@ formulario.addEventListener("submit", async (e) => {
 
         });
 
-        const resultado = await respuesta.json();
+        const texto = await respuesta.text();
 
-        document.getElementById("mensajePopup").innerText =
-            `${resultado.mensaje}, ${resultado.nombre}`;
+        console.log(texto);
 
-        document.getElementById("popup").classList.remove("hidden");
+        const resultado = JSON.parse(texto);
+
+        alert(resultado.mensaje);
 
         formulario.reset();
 
     } catch(error) {
 
+        console.log(error);
         alert("Error al enviar pedido");
-        console.log(await respuesta.text());
-        
+
     }
 
 });
-
-function cerrarPopup() {
-
-    document.getElementById("popup").classList.add("hidden");
-
-}
