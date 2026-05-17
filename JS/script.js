@@ -1,35 +1,53 @@
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const productCards = document.querySelectorAll('.product-card');
+document.addEventListener('DOMContentLoaded', () => {
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
+    const form = document.getElementById('pedidoForm');
 
-                    const filterValue = btn.getAttribute('data-filter');
+    form.addEventListener('submit', async (e) => {
 
-                    productCards.forEach(card => {
-                        const productCategory = card.getAttribute('data-category');
-                        
-                        if (filterValue === 'todos' || filterValue === productCategory) {
-                            card.classList.remove('hidden'); 
-                        } else {
-                            card.classList.add('hidden'); 
-                        }
-                    });
-                });
-            });
-        });
-
-const form = document.querySelector('form');
-
-if(form){
-    form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        alert('¡Pedido realizado con éxito!');
+        const formData = new FormData(form);
 
-        form.reset();
+        const datos = {
+            nombre: formData.get('nombre'),
+            producto: formData.get('producto'),
+            tamano: formData.get('tamano'),
+            metodo_pago: formData.get('metodo_pago')
+        };
+
+        try{
+
+            const respuesta = await fetch('/guardar-pedido', {
+
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(datos)
+
+            });
+
+            const resultado = await respuesta.json();
+
+            document.getElementById('mensajePopup').innerText =
+                `Gracias ${resultado.nombre}, tu pedido fue realizado correctamente ☕`;
+
+            document.getElementById('popup').classList.remove('hidden');
+
+            form.reset();
+
+        }catch(error){
+
+            alert('Error al enviar pedido');
+
+        }
+
     });
+
+});
+
+function cerrarPopup(){
+
+    document.getElementById('popup').classList.add('hidden');
+
 }

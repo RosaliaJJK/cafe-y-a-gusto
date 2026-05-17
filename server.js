@@ -1,76 +1,152 @@
 const express = require('express');
-const { Pool } = require('pg');
+const mysql = require('mysql2');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-// Configuración de la conexión a la base de datos en Render
-// Render nos dará la URL de la base de datos en la variable DATABASE_URL
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false // Requerido por Render
-    }
-});
+const PORT = process.env.PORT || 3000;
 
-// Configurar Express para entender los datos del formulario y servir los archivos HTML
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta para recibir el formulario
-app.post('/guardar-pedido', async (req, res) => {
-    // Extraer los datos que mandó el HTML
-    const { nombre, producto, tamano, metodo_pago } = req.body;
+app.use(express.static(__dirname));
 
-    try {
-        // 1. Buscar los IDs correspondientes en la base de datos
-        const prodResult = await pool.query('SELECT id_producto, precio FROM Productos WHERE nombre = $1', [producto]);
-        const tamResult = await pool.query('SELECT id_tamano FROM Tamanos WHERE nombre = $1', [tamano]);
-        const pagoResult = await pool.query('SELECT id_metodo_pago FROM Metodos_Pago WHERE nombre = $1', [metodo_pago]);
+const db = mysql.createConnection({
 
-        // Verificar que todo exista
-        if (prodResult.rows.length === 0 || tamResult.rows.length === 0 || pagoResult.rows.length === 0) {
-            return res.send("Error: Producto, tamaño o método de pago no encontrado.");
-        }
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 
-        const id_producto = prodResult.rows[0].id_producto;
-        const precio_producto = prodResult.rows[0].precio;
-        const id_tamano = tamResult.rows[0].id_tamano;
-        const id_metodo_pago = pagoResult.rows[0].id_metodo_pago;
-
-        // 2. Insertar el Pedido (Cabecera)
-        const pedidoQuery = `
-            INSERT INTO Pedidos (nombre_cliente, id_metodo_pago, total) 
-            VALUES ($1, $2, $3) RETURNING id_pedido
-        `;
-        const pedidoResult = await pool.query(pedidoQuery, [nombre, id_metodo_pago, precio_producto]);
-        const id_pedido = pedidoResult.rows[0].id_pedido;
-
-        // 3. Insertar el Detalle del Pedido
-        const detalleQuery = `
-            INSERT INTO Detalles_Pedido (id_pedido, id_producto, id_tamano, cantidad, subtotal) 
-            VALUES ($1, $2, $3, $4, $5)
-        `;
-        await pool.query(detalleQuery, [id_pedido, id_producto, id_tamano, 1, precio_producto]);
-
-        // 4. Mostrar mensaje de éxito y regresar al inicio
-        res.send(`
-            <div style="text-align:center; padding: 50px; font-family: sans-serif;">
-                <h2 style="color: #6F4E37;">¡Pedido recibido con éxito, ${nombre}!</h2>
-                <p>Tu <b>${producto}</b> se está preparando.</p>
-                <a href="/" style="display:inline-block; padding:10px 20px; background:#6F4E37; color:white; text-decoration:none; border-radius:5px;">Volver al inicio</a>
-            </div>
-        `);
-
-    } catch (error) {
-        console.error("Error al guardar en la base de datos:", error);
-        res.status(500).send("Ocurrió un error al procesar tu pedido. Intenta nuevamente.");
-    }
 });
 
-// Iniciar el servidor
-app.listen(port, () => {
-    console.log(`Servidor corriendo en el puerto ${port}`);
+db.connect((err) => {
+
+    if(err){
+        console.log('Error conexión MySQL:', err);
+    } else {
+        console.log('Conectado a Railway MySQL');
+    }
+
+});
+
+app.get('/', (req, res) => {
+
+    res.sendFile(path.join(__dirname, 'index.html'));
+
+});
+
+app.post('/guardar-pedido', (req, res) => {
+
+    const {
+        nombre,
+        producto,
+        tamano,
+        metodo_pago
+    } = req.body;
+
+    const buscarProducto = `
+        SELECT id_producto, precio
+        FROM Productos
+        WHERE nombre = ?
+    `;
+
+    db.query(buscarProducto, [producto], (err, productoResult) => {
+
+        if(err){
+            console.log(err);
+            return res.send('Error producto');
+        }
+
+        const id_producto = productoResult[0].id_producto;
+        const precio = productoResult[0].precio;
+
+        const buscarTamano = `
+            SELECT id_tamano
+            FROM Tamanos
+            WHERE nombre = ?
+        `;
+
+        db.query(buscarTamano, [tamano], (err, tamanoResult) => {
+
+            if(err){
+                console.log(err);
+                return res.send('Error tamaño');
+            }
+
+            const id_tamano = tamanoResult[0].id_tamano;
+
+            const buscarPago = `
+                SELECT id_metodo_pago
+                FROM Metodos_Pago
+                WHERE nombre = ?
+            `;
+
+            db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
+
+                if(err){
+                    console.log(err);
+                    return res.send('Error pago');
+                }
+
+                const id_metodo_pago = pagoResult[0].id_metodo_pago;
+
+                const insertarPedido = `
+                    INSERT INTO Pedidos
+                    (nombre_cliente, id_metodo_pago, total)
+                    VALUES (?, ?, ?)
+                `;
+
+                db.query(
+                    insertarPedido,
+                    [nombre, id_metodo_pago, precio],
+                    (err, pedidoResult) => {
+
+                        if(err){
+                            console.log(err);
+                            return res.send('Error pedido');
+                        }
+
+                        const id_pedido = pedidoResult.insertId;
+
+                        const insertarDetalle = `
+                            INSERT INTO Detalles_Pedido
+                            (id_pedido, id_producto, id_tamano, cantidad, subtotal)
+                            VALUES (?, ?, ?, ?, ?)
+                        `;
+
+                        db.query(
+                            insertarDetalle,
+                            [id_pedido, id_producto, id_tamano, 1, precio],
+                            (err) => {
+
+                                if(err){
+                                    console.log(err);
+                                    return res.send('Error detalle');
+                                }
+
+                        res.json({
+                                mensaje: 'Pedido realizado correctamente',
+                                nombre: nombre
+                            });
+
+                            }
+                        );
+
+                    }
+                );
+
+            });
+
+        });
+
+    });
+
+});
+
+app.listen(PORT, () => {
+
+    console.log('Servidor corriendo');
+
 });
