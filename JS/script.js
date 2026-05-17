@@ -1,53 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
+const formulario = document.querySelector("form");
 
-    const form = document.getElementById('pedidoForm');
+formulario.addEventListener("submit", async (e) => {
 
-    form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
+    const datos = new FormData(formulario);
 
-        const formData = new FormData(form);
+    try {
 
-        const datos = {
-            nombre: formData.get('nombre'),
-            producto: formData.get('producto'),
-            tamano: formData.get('tamano'),
-            metodo_pago: formData.get('metodo_pago')
-        };
+        const respuesta = await fetch("/guardar-pedido", {
 
-        try{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams(datos)
 
-            const respuesta = await fetch('/guardar-pedido', {
+        });
 
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify(datos)
+        const resultado = await respuesta.json();
 
-            });
+        document.getElementById("mensajePopup").innerText =
+            `${resultado.mensaje}, ${resultado.nombre}`;
 
-            const resultado = await respuesta.json();
+        document.getElementById("popup").classList.remove("hidden");
 
-            document.getElementById('mensajePopup').innerText =
-                `Gracias ${resultado.nombre}, tu pedido fue realizado correctamente ☕`;
+        formulario.reset();
 
-            document.getElementById('popup').classList.remove('hidden');
+    } catch(error) {
 
-            form.reset();
+        alert("Error al enviar pedido");
+        console.log(error);
 
-        }catch(error){
-
-            alert('Error al enviar pedido');
-
-        }
-
-    });
+    }
 
 });
 
-function cerrarPopup(){
+function cerrarPopup() {
 
-    document.getElementById('popup').classList.add('hidden');
+    document.getElementById("popup").classList.add("hidden");
 
 }
