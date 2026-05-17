@@ -4,6 +4,7 @@ const path = require('path');
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -13,14 +14,12 @@ app.use(express.static(__dirname));
 const db = mysql.createConnection({
 
     host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
+    port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 
 });
-
-console.log("Servidor iniciando...");
 
 db.connect((err) => {
 
@@ -40,9 +39,12 @@ app.get('/', (req, res) => {
 
 app.post('/guardar-pedido', (req, res) => {
 
-    const { nombre, producto, tamano, metodo_pago } = req.body;
-
-    console.log(req.body);
+    const {
+        nombre,
+        producto,
+        tamano,
+        metodo_pago
+    } = req.body;
 
     const buscarProducto = `
         SELECT id_producto, precio
@@ -52,17 +54,9 @@ app.post('/guardar-pedido', (req, res) => {
 
     db.query(buscarProducto, [producto], (err, productoResult) => {
 
-        if (err) {
+        if(err){
             console.log(err);
-            return res.status(500).json({
-                mensaje: 'Error producto'
-            });
-        }
-
-        if (productoResult.length === 0) {
-            return res.status(404).json({
-                mensaje: 'Producto no encontrado'
-            });
+            return res.send('Error producto');
         }
 
         const id_producto = productoResult[0].id_producto;
@@ -76,17 +70,9 @@ app.post('/guardar-pedido', (req, res) => {
 
         db.query(buscarTamano, [tamano], (err, tamanoResult) => {
 
-            if (err) {
+            if(err){
                 console.log(err);
-                return res.status(500).json({
-                    mensaje: 'Error tamaño'
-                });
-            }
-
-            if (tamanoResult.length === 0) {
-                return res.status(404).json({
-                    mensaje: 'Tamaño no encontrado'
-                });
+                return res.send('Error tamaño');
             }
 
             const id_tamano = tamanoResult[0].id_tamano;
@@ -99,17 +85,9 @@ app.post('/guardar-pedido', (req, res) => {
 
             db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
 
-                if (err) {
+                if(err){
                     console.log(err);
-                    return res.status(500).json({
-                        mensaje: 'Error pago'
-                    });
-                }
-
-                if (pagoResult.length === 0) {
-                    return res.status(404).json({
-                        mensaje: 'Método de pago no encontrado'
-                    });
+                    return res.send('Error pago');
                 }
 
                 const id_metodo_pago = pagoResult[0].id_metodo_pago;
@@ -125,11 +103,9 @@ app.post('/guardar-pedido', (req, res) => {
                     [nombre, id_metodo_pago, precio],
                     (err, pedidoResult) => {
 
-                        if (err) {
+                        if(err){
                             console.log(err);
-                            return res.status(500).json({
-                                mensaje: 'Error pedido'
-                            });
+                            return res.send('Error pedido');
                         }
 
                         const id_pedido = pedidoResult.insertId;
@@ -145,17 +121,18 @@ app.post('/guardar-pedido', (req, res) => {
                             [id_pedido, id_producto, id_tamano, 1, precio],
                             (err) => {
 
-                                if (err) {
+                                if(err){
                                     console.log(err);
-                                    return res.status(500).json({
-                                        mensaje: 'Error detalle'
-                                    });
+                                    return res.send('Error detalle');
                                 }
 
-                                return res.json({
-                                    mensaje: 'Pedido realizado correctamente',
-                                    nombre: nombre
-                                });
+                                res.send(`
+                                    <div style="text-align:center;padding:50px;font-family:sans-serif;">
+                                        <h1>Pedido realizado correctamente</h1>
+                                        <p>Gracias ${nombre}</p>
+                                        <a href="/">Volver</a>
+                                    </div>
+                                `);
 
                             }
                         );
