@@ -18,11 +18,23 @@ formulario.addEventListener("submit", async (e) => {
 
         });
 
-        const texto = await respuesta.text();
+        // VERIFICAR SI EL SERVIDOR RESPONDIÓ BIEN
+        if (!respuesta.ok) {
 
-        console.log(texto);
+            const errorTexto = await respuesta.text();
 
-        const resultado = JSON.parse(texto);
+            console.log("ERROR DEL SERVIDOR:");
+            console.log(errorTexto);
+
+            alert("Error en servidor");
+
+            return;
+        }
+
+        // CONVERTIR DIRECTAMENTE A JSON
+        const resultado = await respuesta.json();
+
+        console.log(resultado);
 
         alert(resultado.mensaje);
 
@@ -30,7 +42,9 @@ formulario.addEventListener("submit", async (e) => {
 
     } catch(error) {
 
+        console.log("ERROR COMPLETO:");
         console.log(error);
+
         alert("Error al enviar pedido");
 
     }
