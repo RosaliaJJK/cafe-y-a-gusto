@@ -3,8 +3,8 @@ const mysql = require("mysql2");
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 const PORT = process.env.PORT || 3000;
@@ -19,7 +19,8 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
 
-    if(err){
+    if (err) {
+        console.log("MYSQL ERROR:");
         console.log(err);
     } else {
         console.log("MYSQL CONECTADO");
@@ -29,7 +30,13 @@ db.connect((err) => {
 
 app.post("/guardar-pedido", (req, res) => {
 
+    console.log("DATOS:");
     console.log(req.body);
+
+    const nombre = req.body.nombre;
+    const producto = req.body.producto;
+    const tamano = req.body.tamano;
+    const metodo_pago = req.body.metodo_pago;
 
     const sql = `
         INSERT INTO Pedidos
@@ -37,33 +44,36 @@ app.post("/guardar-pedido", (req, res) => {
         VALUES (?, ?, ?, ?)
     `;
 
-    const valores = [
-        req.body.nombre,
-        req.body.producto,
-        req.body.tamano,
-        req.body.metodo_pago
-    ];
+    db.query(
+        sql,
+        [nombre, producto, tamano, metodo_pago],
+        (err, result) => {
 
-    db.query(sql, valores, (err, result) => {
+            if (err) {
 
-        if(err){
+                console.log("ERROR SQL:");
+                console.log(err);
 
-            console.log(err);
+                return res.status(500).json({
+                    mensaje: "Error SQL",
+                    error: err.message
+                });
 
-            return res.status(500).json({
-                mensaje: "Error guardando"
+            }
+
+            return res.status(200).json({
+                mensaje: "Pedido guardado correctamente"
             });
 
         }
-
-        return res.json({
-            mensaje: "Pedido guardado correctamente"
-        });
-
-    });
+    );
 
 });
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
+
 app.listen(PORT, () => {
-    console.log("Servidor iniciado");
+    console.log("SERVIDOR INICIADO");
 });
