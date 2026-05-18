@@ -17,7 +17,7 @@ const db = mysql.createConnection({
     port: process.env.MYSQLPORT,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQL_DATABASE,
+    database: process.env.MYSQLDATABASE,
 
     ssl: {
         rejectUnauthorized: false
@@ -37,7 +37,7 @@ db.connect((err) => {
 console.log(process.env.MYSQLHOST);
 console.log(process.env.MYSQLPORT);
 console.log(process.env.MYSQLUSER);
-console.log(process.env.MYSQL_DATABASE);
+console.log(process.env.MYSQLDATABASE);
 
 app.get('/', (req, res) => {
 

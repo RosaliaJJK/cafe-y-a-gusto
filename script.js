@@ -18,23 +18,16 @@ formulario.addEventListener("submit", async (e) => {
 
         });
 
-        // VERIFICAR SI EL SERVIDOR RESPONDIÓ BIEN
-        if (!respuesta.ok) {
+        const texto = await respuesta.text();
 
-            const errorTexto = await respuesta.text();
+        console.log("RESPUESTA DEL SERVIDOR:");
+        console.log(texto);
 
-            console.log("ERROR DEL SERVIDOR:");
-            console.log(errorTexto);
-
-            alert("Error en servidor");
-
-            return;
+        if (!texto) {
+            throw new Error("Respuesta vacía del servidor");
         }
 
-        // CONVERTIR DIRECTAMENTE A JSON
-        const resultado = await respuesta.json();
-
-        console.log(resultado);
+        const resultado = JSON.parse(texto);
 
         alert(resultado.mensaje);
 
