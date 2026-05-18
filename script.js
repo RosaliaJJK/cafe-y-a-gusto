@@ -11,9 +11,11 @@ formulario.addEventListener("submit", async (e) => {
         const respuesta = await fetch("/guardar-pedido", {
 
             method: "POST",
+
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
+
             body: new URLSearchParams(datos)
 
         });
@@ -23,22 +25,43 @@ formulario.addEventListener("submit", async (e) => {
         console.log("RESPUESTA DEL SERVIDOR:");
         console.log(texto);
 
-        if (!texto) {
-            throw new Error("Respuesta vacía del servidor");
+        if(!texto || texto.trim() === ""){
+
+            throw new Error("Servidor devolvió respuesta vacía");
+
         }
 
-        const resultado = JSON.parse(texto);
+        let resultado;
+
+        try {
+
+            resultado = JSON.parse(texto);
+
+        } catch(parseError){
+
+            console.log("NO ES JSON:");
+            console.log(texto);
+
+            throw new Error("La respuesta no es JSON válido");
+
+        }
+
+        if(!respuesta.ok){
+
+            throw new Error(resultado.mensaje || "Error del servidor");
+
+        }
 
         alert(resultado.mensaje);
 
         formulario.reset();
 
-    } catch(error) {
+    } catch(error){
 
         console.log("ERROR COMPLETO:");
         console.log(error);
 
-        alert("Error al enviar pedido");
+        alert(error.message);
 
     }
 

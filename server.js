@@ -24,20 +24,21 @@ const db = mysql.createConnection({
     }
 
 });
+
 db.connect((err) => {
 
     if(err){
-        console.log('Error conexión MySQL:', err);
+
+        console.log('ERROR CONEXIÓN MYSQL:');
+        console.log(err);
+
     } else {
-        console.log('Conectado a Railway MySQL');
+
+        console.log('Conectado correctamente a Railway MySQL');
+
     }
 
 });
-
-console.log(process.env.MYSQLHOST);
-console.log(process.env.MYSQLPORT);
-console.log(process.env.MYSQLUSER);
-console.log(process.env.MYSQLDATABASE);
 
 app.get('/', (req, res) => {
 
@@ -47,153 +48,179 @@ app.get('/', (req, res) => {
 
 app.post('/guardar-pedido', (req, res) => {
 
-    console.log("BODY RECIBIDO:");
-    console.log(req.body);
+    try {
 
-    const {
-        nombre,
-        producto,
-        tamano,
-        metodo_pago
-    } = req.body;
+        console.log("BODY RECIBIDO:");
+        console.log(req.body);
 
-    const buscarProducto = `
-        SELECT id_producto, precio
-        FROM Productos
-        WHERE nombre = ?
-    `;
+        const {
+            nombre,
+            producto,
+            tamano,
+            metodo_pago
+        } = req.body;
 
-    db.query(buscarProducto, [producto], (err, productoResult) => {
-
-        if(err){
-            console.log("Error producto:", err);
-
-            return res.status(500).json({
-                mensaje: "Error en la base de datos producto"
-            });
-        }
-
-        if(productoResult.length === 0){
-
-            console.log("Producto NO encontrado:", producto);
-
-            return res.status(404).json({
-                mensaje: "Producto no encontrado en MySQL"
-            });
-        }
-
-        const id_producto = productoResult[0].id_producto;
-        const precio = productoResult[0].precio;
-
-        const buscarTamano = `
-            SELECT id_tamano
-            FROM Tamanos
+        const buscarProducto = `
+            SELECT id_producto, precio
+            FROM Productos
             WHERE nombre = ?
         `;
 
-        db.query(buscarTamano, [tamano], (err, tamanoResult) => {
+        db.query(buscarProducto, [producto], (err, productoResult) => {
 
             if(err){
 
-                console.log("Error tamaño:", err);
+                console.log("ERROR PRODUCTO:");
+                console.log(err);
 
                 return res.status(500).json({
-                    mensaje: "Error tamaño"
+                    mensaje: "Error buscando producto",
+                    error: err.message
                 });
             }
 
-            if(tamanoResult.length === 0){
+            if(productoResult.length === 0){
 
                 return res.status(404).json({
-                    mensaje: "Tamaño no encontrado"
+                    mensaje: "Producto no encontrado",
+                    producto: producto
                 });
             }
 
-            const id_tamano = tamanoResult[0].id_tamano;
+            const id_producto = productoResult[0].id_producto;
+            const precio = productoResult[0].precio;
 
-            const buscarPago = `
-                SELECT id_metodo_pago
-                FROM Metodos_Pago
+            const buscarTamano = `
+                SELECT id_tamano
+                FROM Tamanos
                 WHERE nombre = ?
             `;
 
-            db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
+            db.query(buscarTamano, [tamano], (err, tamanoResult) => {
 
                 if(err){
 
-                    console.log("Error pago:", err);
+                    console.log("ERROR TAMAÑO:");
+                    console.log(err);
 
                     return res.status(500).json({
-                        mensaje: "Error método pago"
+                        mensaje: "Error buscando tamaño",
+                        error: err.message
                     });
                 }
 
-                if(pagoResult.length === 0){
+                if(tamanoResult.length === 0){
 
                     return res.status(404).json({
-                        mensaje: "Método de pago no encontrado"
+                        mensaje: "Tamaño no encontrado",
+                        tamano: tamano
                     });
                 }
 
-                const id_metodo_pago = pagoResult[0].id_metodo_pago;
+                const id_tamano = tamanoResult[0].id_tamano;
 
-                const insertarPedido = `
-                    INSERT INTO Pedidos
-                    (nombre_cliente, id_metodo_pago, total)
-                    VALUES (?, ?, ?)
+                const buscarPago = `
+                    SELECT id_metodo_pago
+                    FROM Metodos_Pago
+                    WHERE nombre = ?
                 `;
 
-                db.query(
-                    insertarPedido,
-                    [nombre, id_metodo_pago, precio],
-                    (err, pedidoResult) => {
+                db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
 
-                        if(err){
+                    if(err){
 
-                            console.log("Error pedido:", err);
+                        console.log("ERROR PAGO:");
+                        console.log(err);
 
-                            return res.status(500).json({
-                                mensaje: "Error insertando pedido"
-                            });
-                        }
-
-                        const id_pedido = pedidoResult.insertId;
-
-                        const insertarDetalle = `
-                            INSERT INTO Detalles_Pedido
-                            (id_pedido, id_producto, id_tamano, cantidad, subtotal)
-                            VALUES (?, ?, ?, ?, ?)
-                        `;
-
-                        db.query(
-                            insertarDetalle,
-                            [id_pedido, id_producto, id_tamano, 1, precio],
-                            (err) => {
-
-                                if(err){
-
-                                    console.log("Error detalle:", err);
-
-                                    return res.status(500).json({
-                                        mensaje: "Error insertando detalle"
-                                    });
-                                }
-
-                                return res.status(200).json({
-                                    mensaje: "Pedido realizado correctamente"
-                                });
-
-                            }
-                        );
-
+                        return res.status(500).json({
+                            mensaje: "Error buscando método de pago",
+                            error: err.message
+                        });
                     }
-                );
+
+                    if(pagoResult.length === 0){
+
+                        return res.status(404).json({
+                            mensaje: "Método de pago no encontrado",
+                            metodo_pago: metodo_pago
+                        });
+                    }
+
+                    const id_metodo_pago = pagoResult[0].id_metodo_pago;
+
+                    const insertarPedido = `
+                        INSERT INTO Pedidos
+                        (nombre_cliente, id_metodo_pago, total)
+                        VALUES (?, ?, ?)
+                    `;
+
+                    db.query(
+                        insertarPedido,
+                        [nombre, id_metodo_pago, precio],
+                        (err, pedidoResult) => {
+
+                            if(err){
+
+                                console.log("ERROR PEDIDO:");
+                                console.log(err);
+
+                                return res.status(500).json({
+                                    mensaje: "Error insertando pedido",
+                                    error: err.message
+                                });
+                            }
+
+                            const id_pedido = pedidoResult.insertId;
+
+                            const insertarDetalle = `
+                                INSERT INTO Detalles_Pedido
+                                (id_pedido, id_producto, id_tamano, cantidad, subtotal)
+                                VALUES (?, ?, ?, ?, ?)
+                            `;
+
+                            db.query(
+                                insertarDetalle,
+                                [id_pedido, id_producto, id_tamano, 1, precio],
+                                (err) => {
+
+                                    if(err){
+
+                                        console.log("ERROR DETALLE:");
+                                        console.log(err);
+
+                                        return res.status(500).json({
+                                            mensaje: "Error insertando detalle",
+                                            error: err.message
+                                        });
+                                    }
+
+                                    return res.status(200).json({
+                                        mensaje: "Pedido realizado correctamente"
+                                    });
+
+                                }
+                            );
+
+                        }
+                    );
+
+                });
 
             });
 
         });
 
-    });
+    } catch(error){
+
+        console.log("ERROR GENERAL:");
+        console.log(error);
+
+        return res.status(500).json({
+            mensaje: "Error interno del servidor",
+            error: error.message
+        });
+
+    }
 
 });
 
