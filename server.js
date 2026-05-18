@@ -133,9 +133,9 @@ app.post('/guardar-pedido', (req, res) => {
                                     })
                                     };
 
-                        res.json({
-                                mensaje: "Pedido realizado correctamente",
-                                nombre: nombre
+                            res.json({
+                                    mensaje: "Pedido realizado correctamente",
+                                    nombre: nombre
                             });
 
                             }
