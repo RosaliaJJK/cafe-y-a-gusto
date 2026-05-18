@@ -3,11 +3,11 @@ const mysql = require("mysql2");
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname));
+
+const PORT = process.env.PORT || 3000;
 
 const db = mysql.createConnection({
     host: process.env.MYSQLHOST,
@@ -19,8 +19,7 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
 
-    if (err) {
-        console.log("ERROR MYSQL:");
+    if(err){
         console.log(err);
     } else {
         console.log("MYSQL CONECTADO");
@@ -32,43 +31,39 @@ app.post("/guardar-pedido", (req, res) => {
 
     console.log(req.body);
 
-    const {
-        nombre,
-        producto,
-        tamano,
-        metodo_pago
-    } = req.body;
-
     const sql = `
         INSERT INTO Pedidos
         (nombre_cliente, producto, tamano, metodo_pago)
         VALUES (?, ?, ?, ?)
     `;
 
-    db.query(
-        sql,
-        [nombre, producto, tamano, metodo_pago],
-        (err, result) => {
+    const valores = [
+        req.body.nombre,
+        req.body.producto,
+        req.body.tamano,
+        req.body.metodo_pago
+    ];
 
-            if (err) {
+    db.query(sql, valores, (err, result) => {
 
-                console.log(err);
+        if(err){
 
-                return res.status(500).json({
-                    mensaje: "Error guardando pedido"
-                });
+            console.log(err);
 
-            }
-
-            return res.json({
-                mensaje: "Pedido guardado correctamente"
+            return res.status(500).json({
+                mensaje: "Error guardando"
             });
 
         }
-    );
+
+        return res.json({
+            mensaje: "Pedido guardado correctamente"
+        });
+
+    });
 
 });
 
 app.listen(PORT, () => {
-    console.log("Servidor corriendo");
+    console.log("Servidor iniciado");
 });
