@@ -54,6 +54,13 @@ app.post('/guardar-pedido', (req, res) => {
 
     db.query(buscarProducto, [producto], (err, productoResult) => {
 
+        if(err){
+            console.log("Error producto:", err);
+            return res.status(500).json({
+                mensaje: "Error producto"
+            });
+        }
+
         if(productoResult.length === 0){
             return res.status(404).json({
                 mensaje: "Producto no encontrado"
@@ -71,12 +78,18 @@ app.post('/guardar-pedido', (req, res) => {
 
         db.query(buscarTamano, [tamano], (err, tamanoResult) => {
 
+            if(err){
+                console.log("Error tamaño:", err);
+                return res.status(500).json({
+                    mensaje: "Error tamaño"
+                });
+            }
+
             if(tamanoResult.length === 0){
                 return res.status(404).json({
                     mensaje: "Tamaño no encontrado"
                 });
             }
-
 
             const id_tamano = tamanoResult[0].id_tamano;
 
@@ -88,6 +101,13 @@ app.post('/guardar-pedido', (req, res) => {
 
             db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
 
+                if(err){
+                    console.log("Error pago:", err);
+                    return res.status(500).json({
+                        mensaje: "Error pago"
+                    });
+                }
+
                 if(pagoResult.length === 0){
                     return res.status(404).json({
                         mensaje: "Método de pago no encontrado"
@@ -95,7 +115,7 @@ app.post('/guardar-pedido', (req, res) => {
                 }
 
                 const id_metodo_pago = pagoResult[0].id_metodo_pago;
-                
+
                 const insertarPedido = `
                     INSERT INTO Pedidos
                     (nombre_cliente, id_metodo_pago, total)
@@ -108,10 +128,11 @@ app.post('/guardar-pedido', (req, res) => {
                     (err, pedidoResult) => {
 
                         if(err){
-                            console.log(err);
+                            console.log("Error pedido:", err);
                             return res.status(500).json({
-                            mensaje: 'Error producto'
-                        });                        }
+                                mensaje: "Error pedido"
+                            });
+                        }
 
                         const id_pedido = pedidoResult.insertId;
 
@@ -127,16 +148,16 @@ app.post('/guardar-pedido', (req, res) => {
                             (err) => {
 
                                 if(err){
-                                    console.log(err);
+                                    console.log("Error detalle:", err);
                                     return res.status(500).json({
-                                        mensaje: 'Error detalle'
-                                    })
-                                    };
+                                        mensaje: "Error detalle"
+                                    });
+                                }
 
-                            res.json({
+                                return res.json({
                                     mensaje: "Pedido realizado correctamente",
                                     nombre: nombre
-                            });
+                                });
 
                             }
                         );
