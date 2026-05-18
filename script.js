@@ -14,16 +14,28 @@ formulario.addEventListener("submit", async (e) => {
     try {
 
         const respuesta = await fetch("/guardar-pedido", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify(datos)
+
         });
 
         const texto = await respuesta.text();
 
+        console.log("RESPUESTA:");
         console.log(texto);
+
+        if (!texto) {
+
+            alert("Servidor devolvió vacío");
+            return;
+
+        }
 
         const resultado = JSON.parse(texto);
 
@@ -33,6 +45,7 @@ formulario.addEventListener("submit", async (e) => {
 
     } catch (error) {
 
+        console.log("ERROR:");
         console.log(error);
 
         alert("Error conectando con servidor");

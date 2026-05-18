@@ -12,21 +12,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 const db = mysql.createConnection({
+
     host: process.env.MYSQLHOST,
-    port: process.env.MYSQLPORT,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    port: process.env.MYSQLPORT
+
 });
 
 db.connect((err) => {
 
     if (err) {
 
-        console.log("ERROR MYSQL:");
+        console.log("ERROR MYSQL");
         console.log(err);
 
     } else {
@@ -45,7 +44,7 @@ app.get("/", (req, res) => {
 
 app.post("/guardar-pedido", (req, res) => {
 
-    console.log("DATOS RECIBIDOS:");
+    console.log("BODY:");
     console.log(req.body);
 
     const {
@@ -64,23 +63,22 @@ app.post("/guardar-pedido", (req, res) => {
     db.query(
         sql,
         [nombre, producto, tamano, metodo_pago],
-        (err, resultado) => {
+        (err, result) => {
 
             if (err) {
 
-                console.log("ERROR INSERTANDO:");
+                console.log("ERROR INSERT:");
                 console.log(err);
 
                 return res.status(500).json({
-                    mensaje: "Error guardando pedido",
-                    error: err.message
+                    mensaje: "Error guardando pedido"
                 });
 
             }
 
             console.log("PEDIDO GUARDADO");
 
-            return res.json({
+            return res.status(200).json({
                 mensaje: "Pedido realizado correctamente"
             });
 
