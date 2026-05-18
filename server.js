@@ -1,42 +1,59 @@
 const express = require("express");
 const mysql = require("mysql2");
+const path = require("path");
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
 
-const PORT = process.env.PORT || 3000;
+app.use(express.static(__dirname));
 
 const db = mysql.createConnection({
     host: process.env.MYSQLHOST,
     port: process.env.MYSQLPORT,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE
+    database: process.env.MYSQLDATABASE,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 db.connect((err) => {
 
     if (err) {
-        console.log("MYSQL ERROR:");
+
+        console.log("ERROR MYSQL:");
         console.log(err);
+
     } else {
+
         console.log("MYSQL CONECTADO");
+
     }
+
+});
+
+app.get("/", (req, res) => {
+
+    res.sendFile(path.join(__dirname, "index.html"));
 
 });
 
 app.post("/guardar-pedido", (req, res) => {
 
-    console.log("DATOS:");
+    console.log("DATOS RECIBIDOS:");
     console.log(req.body);
 
-    const nombre = req.body.nombre;
-    const producto = req.body.producto;
-    const tamano = req.body.tamano;
-    const metodo_pago = req.body.metodo_pago;
+    const {
+        nombre,
+        producto,
+        tamano,
+        metodo_pago
+    } = req.body;
 
     const sql = `
         INSERT INTO Pedidos
@@ -47,22 +64,24 @@ app.post("/guardar-pedido", (req, res) => {
     db.query(
         sql,
         [nombre, producto, tamano, metodo_pago],
-        (err, result) => {
+        (err, resultado) => {
 
             if (err) {
 
-                console.log("ERROR SQL:");
+                console.log("ERROR INSERTANDO:");
                 console.log(err);
 
                 return res.status(500).json({
-                    mensaje: "Error SQL",
+                    mensaje: "Error guardando pedido",
                     error: err.message
                 });
 
             }
 
-            return res.status(200).json({
-                mensaje: "Pedido guardado correctamente"
+            console.log("PEDIDO GUARDADO");
+
+            return res.json({
+                mensaje: "Pedido realizado correctamente"
             });
 
         }
@@ -70,10 +89,8 @@ app.post("/guardar-pedido", (req, res) => {
 
 });
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
-});
-
 app.listen(PORT, () => {
-    console.log("SERVIDOR INICIADO");
+
+    console.log(`Servidor corriendo en puerto ${PORT}`);
+
 });
