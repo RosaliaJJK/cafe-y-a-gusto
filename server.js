@@ -13,14 +13,17 @@ app.use(express.static(__dirname));
 
 const db = mysql.createConnection({
 
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: process.env.MYSQLHOST,
+    port: process.env.MYSQLPORT,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQL_DATABASE,
+
+    ssl: {
+        rejectUnauthorized: false
+    }
 
 });
-
 db.connect((err) => {
 
     if(err){
@@ -30,6 +33,11 @@ db.connect((err) => {
     }
 
 });
+
+console.log(process.env.MYSQLHOST);
+console.log(process.env.MYSQLPORT);
+console.log(process.env.MYSQLUSER);
+console.log(process.env.MYSQL_DATABASE);
 
 app.get('/', (req, res) => {
 
