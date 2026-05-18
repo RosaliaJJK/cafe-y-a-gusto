@@ -4,64 +4,34 @@ formulario.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const datos = new FormData(formulario);
+    const datos = {
+        nombre: document.getElementById("nombre").value,
+        producto: document.getElementById("producto").value,
+        tamano: document.getElementById("tamano").value,
+        metodo_pago: document.getElementById("metodo_pago").value
+    };
 
     try {
 
         const respuesta = await fetch("/guardar-pedido", {
-
             method: "POST",
-
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json"
             },
-
-            body: new URLSearchParams(datos)
-
+            body: JSON.stringify(datos)
         });
 
-        const texto = await respuesta.text();
-
-        console.log("RESPUESTA DEL SERVIDOR:");
-        console.log(texto);
-
-        if(!texto || texto.trim() === ""){
-
-            throw new Error("Servidor devolvió respuesta vacía");
-
-        }
-
-        let resultado;
-
-        try {
-
-            resultado = JSON.parse(texto);
-
-        } catch(parseError){
-
-            console.log("NO ES JSON:");
-            console.log(texto);
-
-            throw new Error("La respuesta no es JSON válido");
-
-        }
-
-        if(!respuesta.ok){
-
-            throw new Error(resultado.mensaje || "Error del servidor");
-
-        }
+        const resultado = await respuesta.json();
 
         alert(resultado.mensaje);
 
         formulario.reset();
 
-    } catch(error){
+    } catch (error) {
 
-        console.log("ERROR COMPLETO:");
         console.log(error);
 
-        alert(error.message);
+        alert("Error conectando con servidor");
 
     }
 
