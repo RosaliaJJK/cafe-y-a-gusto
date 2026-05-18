@@ -39,6 +39,9 @@ app.get('/', (req, res) => {
 
 app.post('/guardar-pedido', (req, res) => {
 
+    console.log("BODY RECIBIDO:");
+    console.log(req.body);
+
     const {
         nombre,
         producto,
@@ -56,14 +59,18 @@ app.post('/guardar-pedido', (req, res) => {
 
         if(err){
             console.log("Error producto:", err);
+
             return res.status(500).json({
-                mensaje: "Error producto"
+                mensaje: "Error en la base de datos producto"
             });
         }
 
         if(productoResult.length === 0){
+
+            console.log("Producto NO encontrado:", producto);
+
             return res.status(404).json({
-                mensaje: "Producto no encontrado"
+                mensaje: "Producto no encontrado en MySQL"
             });
         }
 
@@ -79,13 +86,16 @@ app.post('/guardar-pedido', (req, res) => {
         db.query(buscarTamano, [tamano], (err, tamanoResult) => {
 
             if(err){
+
                 console.log("Error tamaño:", err);
+
                 return res.status(500).json({
                     mensaje: "Error tamaño"
                 });
             }
 
             if(tamanoResult.length === 0){
+
                 return res.status(404).json({
                     mensaje: "Tamaño no encontrado"
                 });
@@ -102,13 +112,16 @@ app.post('/guardar-pedido', (req, res) => {
             db.query(buscarPago, [metodo_pago], (err, pagoResult) => {
 
                 if(err){
+
                     console.log("Error pago:", err);
+
                     return res.status(500).json({
-                        mensaje: "Error pago"
+                        mensaje: "Error método pago"
                     });
                 }
 
                 if(pagoResult.length === 0){
+
                     return res.status(404).json({
                         mensaje: "Método de pago no encontrado"
                     });
@@ -128,9 +141,11 @@ app.post('/guardar-pedido', (req, res) => {
                     (err, pedidoResult) => {
 
                         if(err){
+
                             console.log("Error pedido:", err);
+
                             return res.status(500).json({
-                                mensaje: "Error pedido"
+                                mensaje: "Error insertando pedido"
                             });
                         }
 
@@ -148,15 +163,16 @@ app.post('/guardar-pedido', (req, res) => {
                             (err) => {
 
                                 if(err){
+
                                     console.log("Error detalle:", err);
+
                                     return res.status(500).json({
-                                        mensaje: "Error detalle"
+                                        mensaje: "Error insertando detalle"
                                     });
                                 }
 
-                                return res.json({
-                                    mensaje: "Pedido realizado correctamente",
-                                    nombre: nombre
+                                return res.status(200).json({
+                                    mensaje: "Pedido realizado correctamente"
                                 });
 
                             }
@@ -175,6 +191,6 @@ app.post('/guardar-pedido', (req, res) => {
 
 app.listen(PORT, () => {
 
-    console.log('Servidor corriendo');
+    console.log(`Servidor corriendo en puerto ${PORT}`);
 
 });
