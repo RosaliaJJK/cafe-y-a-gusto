@@ -21,7 +21,11 @@ formulario.addEventListener("submit", async (e) => {
             body: JSON.stringify(datos)
         });
 
-        const resultado = await respuesta.json();
+        const texto = await respuesta.text();
+
+        console.log(texto);
+
+        const resultado = JSON.parse(texto);
 
         alert(resultado.mensaje);
 
